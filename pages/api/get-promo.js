@@ -1,19 +1,18 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet'
 import { processEnv } from 'next/dist/lib/load-env-config'
+import { fromBase64 } from '../../utils/base64'
 
 const doc = new GoogleSpreadsheet(processEnv.SHEET_DOC_ID)
 
 // npm run build
 // npm run start
 
-export default async (req, res) =>
-{
-  try
-  {
+export default async (req, res) => {
+  try {
     await doc.useServiceAccountAuth(
       {
         client_email: processEnv.SHEET_CLIENT_EMAIL,
-        private_key: processEnv.SHEET_PRIVATE_KEY
+        private_key: fromBase64(processEnv.SHEET_PRIVATE_KEY)
       })
 
     await doc.loadInfo()
@@ -29,8 +28,7 @@ export default async (req, res) =>
       message: textoCell.value
     }))
   }
-  catch (err)
-  {
+  catch (err) {
     res.end(JSON.stringify({
       showCoupon: false,
       message: err
