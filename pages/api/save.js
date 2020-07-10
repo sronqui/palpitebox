@@ -45,7 +45,7 @@ export default async (req, res) =>
       WhatsApp: data.WhatsApp,
       Cupom: Cupom,
       Promo: Promo,
-      'Data Preencimento': moment().format('DD/MM/YYYY, HH:mm:ss'),
+      'Data Preenchimento': moment().format('DD/MM/YYYY, HH:mm:ss'),
       Nota: parseInt(data.Nota)
     })
 
@@ -58,6 +58,6 @@ export default async (req, res) =>
   catch (err)
   {
     console.log(err);
-    res.end('error')
+    res.end('error', err)
   }
 }
